@@ -3,6 +3,7 @@
 
 import fetch from 'node-fetch';
 import AWS from 'aws-sdk';
+import { v4 } from 'uuid';
 
 const db = new AWS.DynamoDB.DocumentClient({
   region: 'us-east-1',
@@ -58,7 +59,7 @@ async function createConversation(request) {
   };
 }
 
-async function updateState(stateName) {
+function updateState(stateName) {
   return async (request) => {
     const psid = getPSID(request);
     console.log(`Setting ${psid} to ${stateName}`);
@@ -77,13 +78,12 @@ async function updateState(stateName) {
 }
 
 async function addFeedback(psid, type, payload) {
-  console.log(
-    `Adding feedback with type ${type} and payload ${payload} for ${psid}`,
-  );
+  console.log(`Adding feedback with type ${type} and payload ${payload} for ${psid}`);
   await db
     .put({
-      TableName: 'Conversations',
+      TableName: 'Feedback',
       Item: {
+        id: v4(),
         psid,
         type,
         payload,
@@ -96,17 +96,20 @@ async function addFeedback(psid, type, payload) {
 }
 
 async function foodRatingHandler(request) {
+  const {
+    queryResult: { parameters },
+  } = request;
+  const p = parameters;
+
   console.log('Executing foodRatingHandler');
   let foodRating;
   const psid = getPSID(request);
 
-  const p = request.parameters;
-
   if (p.thumbsdown) {
     foodRating = '0';
-  } else if (p.thumbsUp) {
+  } else if (p.thumbsup) {
     foodRating = '1';
-  } else if (p.oneHundred) {
+  } else if (p.onehundred) {
     foodRating = '2';
   } else {
     console.log('Could not get feedback. Params were: ', JSON.stringify(p));
@@ -118,10 +121,13 @@ async function foodRatingHandler(request) {
 }
 
 async function veganRatingHandler(request) {
+  const {
+    queryResult: { parameters },
+  } = request;
+  const p = parameters;
   let veganRating;
 
   console.log('Vegan rating function here');
-  const p = request.parameters;
   const psid = getPSID(request);
 
   if (p.yesvegan) {
@@ -139,11 +145,13 @@ async function veganRatingHandler(request) {
 }
 
 async function moreFoodHandler(request) {
+  const {
+    queryResult: { parameters },
+  } = request;
+  const p = parameters;
   let foodNotification;
   const psid = getPSID(request);
   console.log('PSID is ', psid);
-
-  const p = request.parameters;
 
   if (p.morefood) {
     foodNotification = 'Yes';
@@ -153,10 +161,7 @@ async function moreFoodHandler(request) {
     console.log('Sad, they dont want food');
   } else {
     console.error('More food function has an error');
-    throw new Error(
-      'Cannot collect response from params + ',
-      JSON.stringify(p),
-    );
+    throw new Error('Cannot collect response from params + ', JSON.stringify(p));
   }
 
   await updateState('DONE')(request);
@@ -183,13 +188,15 @@ const handleRequest = async (request) => {
 
     console.log(`Handling intent ${intent} with ${JSON.stringify(body)}`);
 
-    const response = await intentMap[intent](body);
+    const response = (await intentMap[intent](body)) || {};
     console.log('Responding with: %j', response);
     return {
       statusCode: 200,
       body: JSON.stringify(response),
     };
   } catch (e) {
+    console.error('Error handling request', request);
+    console.error(e);
     return {
       statusCode: 500,
       body: e.message,
