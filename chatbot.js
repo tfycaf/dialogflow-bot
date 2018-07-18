@@ -64,14 +64,19 @@ function updateState(stateName) {
     const psid = getPSID(request);
     console.log(`Setting ${psid} to ${stateName}`);
 
-    await db.update({
-      TableName: 'Conversations',
-      Key: { psid },
-      UpdateExpression: 'set state = :s',
-      ExpressionAttributeValues: {
-        ':s': stateName,
-      },
-    });
+    await db
+      .update({
+        TableName: 'Conversations',
+        Key: { psid },
+        UpdateExpression: 'set #s = :s',
+        ExpressionAttributeNames: {
+          '#s': 'state',
+        },
+        ExpressionAttributeValues: {
+          ':s': stateName,
+        },
+      })
+      .promise();
 
     console.log('Done.');
   };
