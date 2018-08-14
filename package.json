@@ -35,10 +35,11 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "source-map-support": "^0.4.18",
     "aws-sdk": "^2.274.1",
     "babel-runtime": "^6.26.0",
+    "bwip-js": "^1.7.1",
     "node-fetch": "^2.1.2",
-    "source-map-support": "^0.4.18",
     "uuid": "^3.3.2"
   }
 }

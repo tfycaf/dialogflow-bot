@@ -35,7 +35,20 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/Feedback"
-
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/Barcodes"
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/Barcodes"
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource: "arn:aws:s3:::tfyc-barcodes/*"
 
 functions:
   chatbot:
@@ -45,7 +58,7 @@ functions:
           path: chatbot
           method: POST
 
-resources:  # CloudFormation template syntax
+resources: # CloudFormation template syntax
   Resources:
     conversationsTable:
       Type: AWS::DynamoDB::Table
@@ -55,8 +68,8 @@ resources:  # CloudFormation template syntax
           - AttributeName: psid
             AttributeType: S
         KeySchema:
-        - AttributeName: psid
-          KeyType: HASH
+          - AttributeName: psid
+            KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
@@ -68,8 +81,8 @@ resources:  # CloudFormation template syntax
           - AttributeName: id
             AttributeType: S
         KeySchema:
-        - AttributeName: id
-          KeyType: HASH
+          - AttributeName: id
+            KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

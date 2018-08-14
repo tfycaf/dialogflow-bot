@@ -4,6 +4,7 @@
 import fetch from 'node-fetch';
 import AWS from 'aws-sdk';
 import { v4 } from 'uuid';
+import createBarcode from './createBarcode';
 
 const db = new AWS.DynamoDB.DocumentClient({
   region: 'us-east-1',
@@ -53,7 +54,9 @@ async function createConversation(request) {
       {
         name: `${session}/contexts/user`, // Necessary because https://dialogflow.com/docs/reference/v1-v2-migration-guide-fulfillment#contexts_and_sessions
         lifespanCount: 999,
-        parameters: { name },
+        parameters: {
+          name: name || 'my friend',
+        },
       },
     ],
   };
@@ -147,6 +150,40 @@ async function veganRatingHandler(request) {
 
   await updateState('GET_INTEREST_IN_FOOD')(request);
   await addFeedback(psid, 'VEGAN_REACTION', veganRating);
+  const barcodeImageURL = await createBarcode(psid);
+
+  return {
+    fulfillmentMessages: [
+      {
+        platform: 'FACEBOOK',
+        text: {
+          text: [
+            "Want to try this burger for real? Just take this barcode to any Lord of the Fries in the next 7 days and you'll get FREE FRIES with your Premium Chick'n Burger!",
+          ],
+        },
+      },
+      {
+        platform: 'FACEBOOK',
+        card: {
+          title: "Get FREE fries with a Premium Chick'n Burger at Lord of the Fries",
+          imageUri: barcodeImageURL,
+          buttons: [
+            {
+              text: 'Get Discount',
+              postback: barcodeImageURL,
+            },
+          ],
+        },
+      },
+      {
+        platform: 'FACEBOOK',
+        quickReplies: {
+          title: 'Want us to let you know next time we have more free food?',
+          quickReplies: ['Nope', 'Obviously'],
+        },
+      },
+    ],
+  };
 }
 
 async function moreFoodHandler(request) {
@@ -204,7 +241,7 @@ const handleRequest = async (request) => {
     console.error(e);
     return {
       statusCode: 500,
-      body: e.message,
+      body: JSON.stringify(e),
     };
   }
 };
