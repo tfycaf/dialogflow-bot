@@ -16,28 +16,17 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-"@serverless/fdk@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@serverless/fdk/-/fdk-0.5.1.tgz#9d420568bfb291d73f8a8a9b35ba68a974f7d0b7"
-  dependencies:
-    isomorphic-fetch "^2.2.1"
-    ramda "^0.24.1"
-    url-parse "^1.1.9"
-
-"@serverless/platform-sdk@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@serverless/platform-sdk/-/platform-sdk-0.1.5.tgz#9ab1f14f4e14933f80cf20a3123dc21b0b7977cf"
+"@serverless/platform-sdk@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@serverless/platform-sdk/-/platform-sdk-0.2.1.tgz#1c6a804f489dcb85e2af641c9ed7c85cc202dc8b"
   dependencies:
     babel-polyfill "^6.26.0"
-    bluebird "^3.5.1"
     body-parser "^1.18.3"
     chalk "^2.4.1"
     cors "^2.8.4"
     express "^4.16.3"
     is-docker "^1.1.0"
-    is-wsl "^1.1.0"
     isomorphic-fetch "^2.2.1"
-    node-fetch "^2.1.2"
     opn "^5.3.0"
     querystring "^0.2.0"
     ramda "^0.25.0"
@@ -5637,14 +5626,6 @@ querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
 
-querystringify@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.0.0.tgz#fa3ed6e68eb15159457c89b37bc6472833195755"
-
-ramda@^0.24.1:
-  version "0.24.1"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.24.1.tgz#c3b7755197f35b8dc3502228262c4c91ddb6b857"
-
 ramda@^0.25.0:
   version "0.25.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
@@ -5916,10 +5897,6 @@ require-uncached@^1.0.3:
     caller-path "^0.1.0"
     resolve-from "^1.0.0"
 
-requires-port@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
-
 resolve-cwd@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/resolve-cwd/-/resolve-cwd-2.0.0.tgz#00a9f7387556e27038eae232caa372a6a59b665a"
@@ -6143,12 +6120,11 @@ serverless-webpack@^5.1.0:
     semver "^5.5.0"
     ts-node "^3.2.0"
 
-serverless@^1.28.0:
-  version "1.28.0"
-  resolved "https://registry.yarnpkg.com/serverless/-/serverless-1.28.0.tgz#8793afa0adfd45b0396bf132e30ebf80bf1e7ee6"
+serverless@^1.30.0:
+  version "1.30.0"
+  resolved "https://registry.yarnpkg.com/serverless/-/serverless-1.30.0.tgz#03a36fe7c7d6e82fa7053f937425fb9f69da660f"
   dependencies:
-    "@serverless/fdk" "^0.5.1"
-    "@serverless/platform-sdk" "^0.1.5"
+    "@serverless/platform-sdk" "^0.2.1"
     archiver "^1.1.0"
     async "^1.5.2"
     aws-sdk "^2.228.0"
@@ -6962,13 +6938,6 @@ url-parse-lax@^1.0.0:
   resolved "https://registry.yarnpkg.com/url-parse-lax/-/url-parse-lax-1.0.0.tgz#7af8f303645e9bd79a272e7a14ac68bc0609da73"
   dependencies:
     prepend-http "^1.0.1"
-
-url-parse@^1.1.9:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.1.tgz#4dec9dad3dc8585f862fed461d2e19bbf623df30"
-  dependencies:
-    querystringify "^2.0.0"
-    requires-port "^1.0.0"
 
 url-to-options@^1.0.1:
   version "1.0.1"
