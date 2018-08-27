@@ -211,14 +211,17 @@ async function moreFoodHandler(request) {
 }
 
 const intentMap = {
-  '1.getStarted': createConversation,
-  '1a.getStarted.response.yes': updateState('GET_FOOD_FEEDBACK'),
-  '1b.getStarted.response.no': updateState('GET_FOOD_FEEDBACK'),
+  'Default Welcome Intent': createConversation,
+  'BotPathway.main.yes': updateState('GET_FOOD_FEEDBACK'),
+  'BotPathway.main.no': updateState('GET_FOOD_FEEDBACK'),
   '2b.thumbsdown': foodRatingHandler,
   '2a.thumbsupand100': foodRatingHandler,
-  '3a.more.options': veganRatingHandler,
-  '4a.goodend': moreFoodHandler,
-  '4b.Badend': moreFoodHandler,
+  '3b.noadd': veganRatingHandler,
+  '3a.discounts': veganRatingHandler,
+  '4b.badend': moreFoodHandler,
+  '4b.goodend': moreFoodHandler,
+  '4a.goodendi': moreFoodHandler,
+  '4b.Badendi': moreFoodHandler,
 };
 
 const extractIntent = body => body.queryResult.intent.displayName;
