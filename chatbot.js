@@ -27,7 +27,7 @@ function getPSID(request) {
 
 async function createConversation(request) {
   const psid = getPSID(request);
-  const timeStamp = new Date().getTime();
+  const timeStamp = new Date().toISOString();
 
   const p = await getProfile(psid);
   console.log('Retrieved profile for user', p);
@@ -95,7 +95,7 @@ async function addFeedback(psid, type, payload) {
         psid,
         type,
         payload,
-        createdAt: new Date().getTime(),
+        createdAt: new Date().toISOString(),
       },
     })
     .promise();
