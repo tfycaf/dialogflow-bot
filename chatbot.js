@@ -10,7 +10,7 @@ const db = new AWS.DynamoDB.DocumentClient({
   region: 'us-east-1',
 });
 
-const PAGE_ACCESS_TOKEN = 'EAADAuC53U2kBAIHqd4uSNvhghEC7YKU8Xai4aZBdeKSddPYWVGSOTG6mDje7umzI5JJIrW7zNS59ZBOhCt1q9xx8qCeMws8gMZCNx35vXQXYDjGoV2TXpLUj2jKQbcMwEcjPeIosSKsmljqRjZBKCttxye3SccVRaOzOa2ZCFcwZDZD';
+const PAGE_ACCESS_TOKEN = 'EAACZBYlTaAHEBAFimwhmtyWNvqhneqgWSizbcvkDTasi9zAWlaNvhs1DOsCg93GVrxqb0uBNZABfrZAL3wTB4j9RlmI9cElhifENM1dHKaPZAbKoPDJkVdJOsvEYtWHOjtCpmVaRQ0BUABFCtZA7sc3LVut3pmQn3Y4JibZAqgUAvSZB4p9ifJZB';
 
 function getProfile(psid) {
   const URL = `https://graph.facebook.com/v2.6/${psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
