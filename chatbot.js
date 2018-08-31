@@ -49,17 +49,6 @@ async function createConversation(request) {
 
   const { session } = request;
 
-  return {
-    outputContexts: [
-      {
-        name: `${session}/contexts/user`, // Necessary because reasons: https://dialogflow.com/docs/reference/v1-v2-migration-guide-fulfillment#contexts_and_sessions
-        lifespanCount: 999,
-        parameters: {
-          name: name || 'my friend',
-        },
-      },
-    ],
-  };
 }
 
 function updateState(stateName) {
